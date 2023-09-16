@@ -15,6 +15,6 @@ if __name__ == "__main__":
         # Create a BallDetector instance for each image
         detector = BallDetector(location_path)
         detector.detect_balls()
-        # detector.display_result()
+        # detector.display_result() # Show the result
         store_path = os.path.join(store_folder, image_name)
-        detector.save_result(store_path)  # Uncomment to save the result
+        detector.save_result(store_path)  # Save the result

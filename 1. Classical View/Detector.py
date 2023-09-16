@@ -34,10 +34,10 @@ class BallDetector:
             cv2.HOUGH_GRADIENT,
             dp=1,
             minDist=200,
-            param1=300,
+            param1=450,
             param2=20,
             minRadius=10,
-            maxRadius=150
+            maxRadius=200
         )
 
         # Detect Circles for Red Balls
@@ -46,7 +46,7 @@ class BallDetector:
             cv2.HOUGH_GRADIENT,
             dp=1,
             minDist=200,
-            param1=460,
+            param1=470,
             param2=23,
             minRadius=12,
             maxRadius=150
@@ -81,7 +81,7 @@ class BallDetector:
         # Draw the smallest red and largest blue circles on the original image
         if smallest_red_circle is not None:
             center, radius = smallest_red_circle
-            cv2.circle(self.image, center, radius, (0, 0, 255), 2)
+            cv2.circle(self.image, center, radius, (255, 0, 0), 2)
 
         if largest_blue_circle is not None:
             center, radius = largest_blue_circle
