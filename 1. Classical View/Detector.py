@@ -18,9 +18,6 @@ class BallDetector:
         lower_red2 = np.array([160, 50, 50])
         upper_red2 = np.array([180, 255, 255])
 
-        # Apply Gaussian Blur to the entire image
-        blurred_image = cv2.GaussianBlur(self.image, (9, 9), 2)
-
         # Create masks for blue and red colors
         blue_mask = cv2.inRange(self.hsv, lower_blue, upper_blue)
         red_mask1 = cv2.inRange(self.hsv, lower_red1, upper_red1)
@@ -39,8 +36,8 @@ class BallDetector:
             minDist=200,
             param1=300,
             param2=20,
-            minRadius=1,
-            maxRadius=100
+            minRadius=10,
+            maxRadius=150
         )
 
         # Detect Circles for Red Balls
@@ -51,25 +48,44 @@ class BallDetector:
             minDist=200,
             param1=460,
             param2=23,
-            minRadius=1,
-            maxRadius=100
+            minRadius=12,
+            maxRadius=150
         )
 
-        # Draw Detected Blue Circles on the original image
+        smallest_red_circle = None
+        largest_blue_circle = None
+
+        # Initialize variables to track smallest and largest radii
+        min_red_radius = float('inf')
+        max_blue_radius = 0
+
+        # Detect the smallest red and largest blue circles
         if blue_circles is not None:
             blue_circles = np.uint16(np.around(blue_circles))
             for circle in blue_circles[0, :]:
                 center = (circle[0], circle[1])
                 radius = circle[2]
-                cv2.circle(self.image, center, radius, (0, 255, 0), 2)
+                if radius > max_blue_radius:
+                    max_blue_radius = radius
+                    largest_blue_circle = (center, radius)
 
-        # Draw Detected Red Circles on the original image
         if red_circles is not None:
             red_circles = np.uint16(np.around(red_circles))
             for circle in red_circles[0, :]:
                 center = (circle[0], circle[1])
                 radius = circle[2]
-                cv2.circle(self.image, center, radius, (0, 0, 255), 2)
+                if radius < min_red_radius:
+                    min_red_radius = radius
+                    smallest_red_circle = (center, radius)
+
+        # Draw the smallest red and largest blue circles on the original image
+        if smallest_red_circle is not None:
+            center, radius = smallest_red_circle
+            cv2.circle(self.image, center, radius, (0, 0, 255), 2)
+
+        if largest_blue_circle is not None:
+            center, radius = largest_blue_circle
+            cv2.circle(self.image, center, radius, (0, 255, 0), 2)
 
     def display_result(self):
         cv2.imshow('Balls Detected', self.image)
