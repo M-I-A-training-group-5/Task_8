@@ -24,6 +24,7 @@ The BallDetector class is responsible for detecting balls in an image. It uses t
 * Creates masks for blue and red colors in the image.
 * Applies Gaussian Blur to the masks to reduce noise.
 * Uses Hough Circle detection to find blue and red circles in the image.
+* Choose the largest blue and red circles in the image
 * Draws these circles on the original image.
 * Provides methods to display and save the results.
 

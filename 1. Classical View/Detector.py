@@ -9,7 +9,7 @@ class BallDetector:
 
     def detect_balls(self):
         # Define the lower and upper bounds of the blue color in HSV
-        lower_blue = np.array([90, 50, 50])
+        lower_blue = np.array([110, 50, 50])
         upper_blue = np.array([130, 255, 255])
 
         # Define the lower and upper bounds of the red color in HSV
@@ -34,8 +34,8 @@ class BallDetector:
             cv2.HOUGH_GRADIENT,
             dp=1,
             minDist=200,
-            param1=450,
-            param2=20,
+            param1=60,
+            param2=22.4,
             minRadius=10,
             maxRadius=200
         )
@@ -47,12 +47,12 @@ class BallDetector:
             dp=1,
             minDist=200,
             param1=470,
-            param2=23,
-            minRadius=12,
+            param2=23.4,
+            minRadius=19,
             maxRadius=150
         )
 
-        smallest_red_circle = None
+        largest_red_circle = None
         largest_blue_circle = None
 
         # Initialize variables to track smallest and largest radii
@@ -76,16 +76,16 @@ class BallDetector:
                 radius = circle[2]
                 if radius < min_red_radius:
                     min_red_radius = radius
-                    smallest_red_circle = (center, radius)
+                    largest_red_circle = (center, radius)
 
-        # Draw the smallest red and largest blue circles on the original image
-        if smallest_red_circle is not None:
-            center, radius = smallest_red_circle
+        # Draw the largest red and blue circles on the original image
+        if largest_red_circle is not None:
+            center, radius = largest_red_circle
             cv2.circle(self.image, center, radius, (255, 0, 0), 2)
 
         if largest_blue_circle is not None:
             center, radius = largest_blue_circle
-            cv2.circle(self.image, center, radius, (0, 255, 0), 2)
+            cv2.circle(self.image, center, radius, (0, 0, 255), 2)
 
     def display_result(self):
         cv2.imshow('Balls Detected', self.image)
