@@ -31,6 +31,6 @@ The BallDetector class is responsible for detecting balls in an image. It uses t
 You can customize the color detection parameters and Hough Circle detection parameters in the detect_balls method of the BallDetector class to suit your specific needs.
 
 # Conclusion
-The provided Python code offers a practical yet traditional approach for detecting blue and red balls in images using OpenCV. While it might serves its purpose, it's important to note that this classical method can be relatively inefficient and inaccurate, especially in scenarios with complex backgrounds or varying lighting conditions.
+The provided Python code offers a practical yet traditional approach for detecting blue and red balls in images using OpenCV. While it might serve its purpose, it's important to note that this classical method can be relatively inefficient and inaccurate, especially in scenarios with complex backgrounds or varying lighting conditions.
 
 For more robust and accurate ball detection tasks, considering the adoption of deep learning methods could be a beneficial step forward. Deep learning approaches, such as convolutional neural networks (CNN), have shown significant advancements in object detection tasks, offering better adaptability to various environments and increased accuracy.

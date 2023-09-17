@@ -34,7 +34,7 @@ class BallDetector:
             cv2.HOUGH_GRADIENT,
             dp=1,
             minDist=200,
-            param1=60,
+            param1=80,
             param2=22.4,
             minRadius=10,
             maxRadius=200
